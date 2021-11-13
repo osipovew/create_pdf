@@ -7,7 +7,7 @@ imageList = sorted(arr_jpg)
 
 
 waveFile = 'wave.png'
-
+logo = 'logo.png'
 
 pdf = FPDF(orientation='l')
 pdf.set_font('Arial', 'B', 16)
@@ -25,6 +25,7 @@ for imageFile in imageList:
 
     pdf.image(imageFile, 10, 30, 277, 170)
     pdf.cell(20, 20, txt_content, 10)
+    pdf.image(logo, 0, 0, 297, 20)
 
 
 
