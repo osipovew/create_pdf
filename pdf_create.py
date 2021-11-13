@@ -7,21 +7,40 @@ arr_jpg = [f for f in glob.glob("*.jpg")]
 imagelist = sorted(arr_jpg)
 print(imagelist)
 
-# time_txt = open(r"C:\Users\Adm\PycharmProjects\create_pdf", "r") запуск с правами админа
-time_txt = open("text.txt", "r")
-data = time_txt.read()
-time_txt.close()
 
 pdf = FPDF(orientation='l')
+pdf.set_auto_page_break( False )
+pdf.set_font('Arial', 'B', 16)
+pdf.add_page()
+
+
+counter = 0
+y =10
+x =10
+
 
 for imageFile in imagelist:
+    counter = counter + 1
+    y = y + 10
+    x = x + 10
+
+    txt_filename = imageFile + ".txt"
+    txt_format = "PHOTO #" + str(counter) + " | " + open(txt_filename, "r").read()
+
     cover = Image.open(imageFile)
     width, height = cover.size
-    pdf.add_page()
-    pdf.image(imageFile, 0, 0)
-    pdf.cell(100, 10, txt=data.format(imageFile), ln=1) #пошел говорит в жопу
+
+    pdf.image(imageFile, x, y)
+    #pdf.set_xy(0, y)
+
+    print("=====================")
+    print('image: ' + imageFile)
+    print("x:" + str(pdf.get_x()))
+    print("y:" + str(pdf.get_y()))
+    print("=====================")
+    #pdf.cell(100, 10, txt_format)
 
 
-pdf.set_font("Arial", size=25)
+
 pdf.ln(100)  # ниже на 85
-pdf.output("add_image.pdf")
+pdf.output("add_image2.pdf")
