@@ -1,35 +1,32 @@
 from fpdf import FPDF
-from PIL import Image
 import glob
-import os
-from fpdf import FPDF
-from PIL import Image
-import glob
-import os
 
 
 arr_jpg = [f for f in glob.glob("*.jpg")]
-
-pictures = sorted(arr_jpg)
-print(pictures)
+imageList = sorted(arr_jpg)
 
 
-image_directory = 'C:\\Users\\vtelv\\PycharmProjects\\create_pdf'
-extensions = ('*.jpg','*.png','*.gif')
-pdf = FPDF()
-imagelist=[]
-for ext in extensions:imagelist.extend(glob.glob(os.path.join(image_directory,ext)))
-
-for imageFile in imagelist:
-    cover = Image.open(imageFile)
-    width, height = cover.size
-
-    # convert pixel in mm with 1px=0.264583 mm
-    width, height = float(width * 0.264583), float(height * 0.264583)
-
-    # given we are working with A4 format size
-    pdf_size = {'P': {'w': 210, 'h': 297}, 'L': {'w': 297, 'h': 210}}
+waveFile = 'wave.png'
 
 
-    pdf.image(imageFile, 0, 0, width, height)
+pdf = FPDF(orientation='l')
+pdf.set_font('Arial', 'B', 16)
+pdf.add_page()
+
+
+counter = 0
+
+
+for imageFile in imageList:
+    counter = counter + 1
+
+    pdf.image(waveFile, 0, 0, 297, 20)
+
+    txt_content = "PHOTO #" + str(counter) + " | " + open(imageFile + ".txt", "r").read()
+
+    pdf.image(imageFile, 10, 30, 277, 170)
+    pdf.cell(20, 20, txt_content, 10)
+    pdf.add_page()
+
+
 pdf.output("add_image.pdf")
