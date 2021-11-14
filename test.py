@@ -1,18 +1,8 @@
 from fpdf import FPDF
-import glob
-
-
-arr_jpg = [f for f in glob.glob("*.jpg")]
-imageList = sorted(arr_jpg)
-
-
-pdf = FPDF(orientation='l')
-
-
-for imageFile in imageList:
+pdf = FPDF()
+imagelist = "lg.png"
+# imagelist is the list with all image filenames
+for image in imagelist:
     pdf.add_page()
-    pdf.image(imageFile, 10, 30, 277, 170)
-
-
-
-pdf.output("add_image.pdf")
+    pdf.image(imagelist, 10, 10, 10, 10)
+pdf.output("yourfile.pdf", "F")
